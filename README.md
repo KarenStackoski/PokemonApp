@@ -17,4 +17,4 @@ Para clonar, basta seguir os passos a seguir:
 [Karen Stackoski](https://github.com/KarenStackoski)
 [Mateus Mariot](https://github.com/korott)
 [Victor Gaz](https://github.com/xLeotte)
-[Luis Mendonça]()
+[Luis Mendonça](https://github.com/luisgabrielmr)
