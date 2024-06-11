@@ -1,0 +1,26 @@
+Comandos SQL:
+
+insert into tb_pokemon(pokemon,tipo_pokemon) values (?,?);
+
+select * from tb_pokemon tp ;
+select * from tb_totalizadores tt;
+select * from tb_pokemon_deletado tpd;
+select * from tb_pokemon_eletrico tpe;
+select * from tb_pokemon_fogo tpf;
+select * from tb_pokemon_voador tpv;
+
+
+insert into tb_pokemon_eletrico (id_pokemon_eletrico, pokemon_eletrico) values (?,?);
+insert into tb_pokemon_fogo  (id_pokemon_fogo, pokemon_fogo) values (?,?);
+insert into tb_pokemon_voador  (id_pokemon_voador , pokemon_voador) values (?,?);
+
+insert into tb_pokemon_deletado  (pokemon_deletado, tipo_pokemon_deletado) values (?,?);
+delete from tb_pokemon where id_pokemon = ?;
+
+insert into tb_totalizadores(tot_fogo, tot_voador, tot_eletrico, tot_duplicado) 
+select
+	(select count(id_pokemon_fogo) from tb_pokemon_fogo tpf), 
+	(select count(id_pokemon_voador) from tb_pokemon_voador tpv),
+	(select count(id_pokemon_eletrico) from tb_pokemon_eletrico tpe),
+	(select count(id_pokemon_deletado) from tb_pokemon_deletado tpd)
+;
