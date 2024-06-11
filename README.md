@@ -13,9 +13,9 @@ Para clonar, basta seguir os passos a seguir:
   * Em caso de ser seu primeiro commit com essa branch, execute `git push --set-upstream origin [nome da barnch]`
 * Agora suas alterações estão na sua branch, no GitHub. Aguarde que em breve suas mudanças serão adicionadas para a main
 
-## Informações sobre o banco de daddos
+## Informações sobre o banco de dados
 
-Todos os arquivos SQL e comandos necessários para orientar os desenvolvedores em relação ao relacionamento do códiigo com o banco de dados está da pasta [DataBase]().
+Todos os arquivos SQL e comandos necessários para orientar os desenvolvedores em relação ao relacionamento do códiigo com o banco de dados está da pasta [DataBase](https://github.com/KarenStackoski/PokemonApp/tree/main/DataBase).
 
 ## Conheça os desenvolvedores
 [Karen Stackoski](https://github.com/KarenStackoski)
