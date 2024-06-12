@@ -9,16 +9,26 @@ import java.util.ArrayList;
 import database.model.PokemonEletricoModel;
 
 public class PokemonEletricoDAO {
-	private String script = ""; //onde será implementado o script sql
-	private PreparedStatement psScript;
+	private String scriptSelect = ""; //onde será implementado o script sql
+	private String scriptInsert = "";
+	private PreparedStatement psScriptSelect;
+	private PreparedStatement psScriptInsert;
 	
 	public PokemonEletricoDAO(Connection connection) throws SQLException {
-		psScript = connection.prepareStatement(script);
+		psScriptSelect = connection.prepareStatement(scriptSelect);
+		psScriptInsert = connection.prepareStatement(scriptInsert);
+	}
+	
+	public boolean insert(PokemonEletricoModel eletricPokemon) throws SQLException {
+		psScriptInsert.clearParameters();
+		psScriptInsert.setInt(1, eletricPokemon.getId());
+		psScriptInsert.setString(0, eletricPokemon.getPokemonEletrico());
+		return psScriptInsert.execute();
 	}
 	
 	public ArrayList<PokemonEletricoModel> selectAll() throws SQLException{
 		ArrayList<PokemonEletricoModel> eletricPokemonList = new ArrayList<PokemonEletricoModel>();
-		ResultSet result = psScript.executeQuery();
+		ResultSet result = psScriptSelect.executeQuery();
 		if (result != null) {
 			result.first();
 			while(result.isAfterLast()) {
