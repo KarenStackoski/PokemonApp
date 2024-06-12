@@ -1,13 +1,13 @@
 package database.model;
 
-public class PokemonTotalizadores {
+public class PokemonTotalizadoresModel {
 	private int id;
 	private int totalizadorFogo;
 	private int totalizadorVoador;
 	private int totalizadorEletrico;
 	private int totalizadorDeletado;
 	
-	public PokemonTotalizadores() {
+	public PokemonTotalizadoresModel() {
 		
 	}
 

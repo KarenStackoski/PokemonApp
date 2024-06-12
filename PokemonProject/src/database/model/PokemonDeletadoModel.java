@@ -1,11 +1,11 @@
 package database.model;
 
-public class PokemonDeletado {
+public class PokemonDeletadoModel {
 	private int id;
 	private String pokemonDeletado;
 	private String tipoPokemonDeletado;
 	
-	public PokemonDeletado() {
+	public PokemonDeletadoModel() {
 		
 	}
 
@@ -33,3 +33,4 @@ public class PokemonDeletado {
 		this.tipoPokemonDeletado = tipoPokemonDeletado;
 	}
 }
+
