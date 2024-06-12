@@ -9,16 +9,26 @@ import java.util.ArrayList;
 import database.model.PokemonFogoModel;
 
 public class PokemonFogoDAO {
-	private String script = ""; //onde será implementado o script sql
-	private PreparedStatement psScript;
+	private String scriptSelect = ""; //onde será implementado o script sql
+	private String scriptInsert = "";
+	private PreparedStatement psScriptSelect;
+	private PreparedStatement psScriptInsert;
 	
 	public PokemonFogoDAO(Connection connection) throws SQLException {
-		psScript = connection.prepareStatement(script);
+		psScriptSelect = connection.prepareStatement(scriptSelect);
+		psScriptInsert = connection.prepareStatement(scriptInsert);
+	}
+	
+	public boolean insert(PokemonFogoModel firePokemon) throws SQLException {
+		psScriptInsert.clearParameters();
+		psScriptInsert.setInt(1, firePokemon.getId());
+		psScriptInsert.setString(2, firePokemon.getPokemonFogo());
+		return psScriptInsert.execute();
 	}
 	
 	public ArrayList<PokemonFogoModel> selectAll() throws SQLException{
 		ArrayList<PokemonFogoModel> firePokemonList = new ArrayList<PokemonFogoModel>();
-		ResultSet result = psScript.executeQuery();
+		ResultSet result = psScriptSelect.executeQuery();
 		if (result != null) {
 			result.first();
 			while(result.isAfterLast()) {
