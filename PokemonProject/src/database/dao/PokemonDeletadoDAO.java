@@ -9,16 +9,27 @@ import java.util.ArrayList;
 import database.model.PokemonDeletadoModel;
 
 public class PokemonDeletadoDAO {
-	private String script = ""; //onde será implementado o script sql
-	private PreparedStatement psScript;
+	private String scriptSelect = ""; //onde será implementado o script sql
+	private String scriptInsert = "";
+	private PreparedStatement psScriptSelect;
+	private PreparedStatement psScriptInsert;
 	
 	public PokemonDeletadoDAO(Connection connection) throws SQLException {
-		psScript = connection.prepareStatement(script);
+		psScriptSelect = connection.prepareStatement(scriptSelect);
+		psScriptInsert = connection.prepareStatement(scriptInsert);
+	}
+	
+	public boolean insert(PokemonDeletadoModel deletedPokemon) throws SQLException {
+		psScriptInsert.clearParameters();
+		psScriptInsert.setInt(1, deletedPokemon.getId());
+		psScriptInsert.setString(2, deletedPokemon.getPokemonDeletado());
+		psScriptInsert.setString(3, deletedPokemon.getTipoPokemonDeletado());
+		return psScriptInsert.execute();
 	}
 	
 	public ArrayList<PokemonDeletadoModel> selectAll() throws SQLException{
 		ArrayList<PokemonDeletadoModel> deletedPokemonList = new ArrayList<PokemonDeletadoModel>();
-		ResultSet result = psScript.executeQuery();
+		ResultSet result = psScriptSelect.executeQuery();
 		if (result != null) {
 			result.first();
 			while(result.isAfterLast()) {

@@ -9,16 +9,38 @@ import java.util.ArrayList;
 import database.model.PokemonModel;
 
 public class PokemonDAO {
-	private String script = ""; //onde será implementado o script sql
-	private PreparedStatement psScript;
+	private String scriptSelect = ""; //onde será implementado o script sql
+	private String scriptInsert = "";
+	private String scriptDelete = "";
+	private PreparedStatement psScriptSelect;
+	private PreparedStatement psScriptInsert;
+	private PreparedStatement psScriptDelete;
 	
 	public PokemonDAO(Connection connection) throws SQLException {
-		psScript = connection.prepareStatement(script);
+		psScriptSelect = connection.prepareStatement(scriptSelect);
+		psScriptInsert = connection.prepareStatement(scriptInsert);
+		psScriptDelete = connection.prepareStatement(scriptDelete);
+	}
+	
+	public boolean delete(PokemonModel pokemon) throws SQLException {
+		psScriptDelete.clearParameters();
+		psScriptDelete.setInt(1, pokemon.getId());
+		psScriptDelete.setString(2, pokemon.getPokemon());
+		psScriptDelete.setString(3, pokemon.getTipo());
+		return psScriptDelete.execute();
+	}
+	
+	public boolean insert(PokemonModel pokemon) throws SQLException {
+		psScriptInsert.clearParameters();
+		psScriptInsert.setInt(1, pokemon.getId());
+		psScriptInsert.setString(2, pokemon.getPokemon());
+		psScriptInsert.setString(3, pokemon.getTipo());
+		return psScriptInsert.execute();
 	}
 	
 	public ArrayList<PokemonModel> selectAll() throws SQLException{
 		ArrayList<PokemonModel> pokemonList = new ArrayList<PokemonModel>();
-		ResultSet result = psScript.executeQuery();
+		ResultSet result = psScriptSelect.executeQuery();
 		if (result != null) {
 			result.first();
 			while(result.isAfterLast()) {

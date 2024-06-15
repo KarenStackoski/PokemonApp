@@ -7,18 +7,32 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import database.model.PokemonTotalizadoresModel;
+import database.model.PokemonVoadorModel;
 
 public class PokemonTotalizadoresDAO {
-	private String script = ""; //onde será implementado o script sql
-	private PreparedStatement psScript;
+	private String scriptSelect = ""; //onde será implementado o script sql
+	private String scriptInsert = "";
+	private PreparedStatement psScriptSelect;
+	private PreparedStatement psScriptInsert;
 	
 	public PokemonTotalizadoresDAO(Connection connection) throws SQLException {
-		psScript = connection.prepareStatement(script);
+		psScriptSelect = connection.prepareStatement(scriptSelect);
+		psScriptInsert = connection.prepareStatement(scriptInsert);
+	}
+	
+	public boolean insert(PokemonTotalizadoresModel totPokemon) throws SQLException {
+		psScriptInsert.clearParameters();
+		psScriptInsert.setInt(1, totPokemon.getId());
+		psScriptInsert.setInt(2, totPokemon.getTotalizadorDeletado());
+		psScriptInsert.setInt(3, totPokemon.getTotalizadorEletrico());
+		psScriptInsert.setInt(4, totPokemon.getTotalizadorFogo());
+		psScriptInsert.setInt(5, totPokemon.getTotalizadorVoador());
+		return psScriptInsert.execute();
 	}
 	
 	public ArrayList<PokemonTotalizadoresModel> selectAll() throws SQLException{
 		ArrayList<PokemonTotalizadoresModel> totPokemonList = new ArrayList<PokemonTotalizadoresModel>();
-		ResultSet result = psScript.executeQuery();
+		ResultSet result = psScriptSelect.executeQuery();
 		if (result != null) {
 			result.first();
 			while(result.isAfterLast()) {
