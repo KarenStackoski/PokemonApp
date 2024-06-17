@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import database.model.PokemonVoadorModel;
 
 public class PokemonVoadorDAO {
-	private String scriptSelect = ""; //onde será implementado o script sql
-	private String scriptInsert = "";
+	private String scriptSelect = "select * from tb_pokemon_voador"; //onde será implementado o script sql
+	private String scriptInsert = "insert into tb_pokemon_voador  (id_pokemon_voador , pokemon_voador) values (?,?)";
 	private PreparedStatement psScriptSelect;
 	private PreparedStatement psScriptInsert;
 	

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import database.model.PokemonEletricoModel;
 
 public class PokemonEletricoDAO {
-	private String scriptSelect = ""; //onde será implementado o script sql
-	private String scriptInsert = "";
+	private String scriptSelect = "select * from tb_pokemon_eletrico"; //onde será implementado o script sql
+	private String scriptInsert = "insert into tb_pokemon_eletrico (id_pokemon_eletrico, pokemon_eletrico) values (?,?)";
 	private PreparedStatement psScriptSelect;
 	private PreparedStatement psScriptInsert;
 	
