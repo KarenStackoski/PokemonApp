@@ -10,8 +10,14 @@ import database.model.PokemonTotalizadoresModel;
 import database.model.PokemonVoadorModel;
 
 public class PokemonTotalizadoresDAO {
-	private String scriptSelect = ""; //onde será implementado o script sql
-	private String scriptInsert = "";
+	private String scriptSelect = "select * from tb_totalizadores"; //onde será implementado o script sql
+	private String scriptInsert = "insert into tb_totalizadores(tot_fogo, tot_voador, tot_eletrico, tot_duplicado) \r\n"
+			+ "select\r\n"
+			+ "	(select count(id_pokemon_fogo) from tb_pokemon_fogo tpf), \r\n"
+			+ "	(select count(id_pokemon_voador) from tb_pokemon_voador tpv),\r\n"
+			+ "	(select count(id_pokemon_eletrico) from tb_pokemon_eletrico tpe),\r\n"
+			+ "	(select count(id_pokemon_deletado) from tb_pokemon_deletado tpd)\r\n"
+			+ ";";
 	private PreparedStatement psScriptSelect;
 	private PreparedStatement psScriptInsert;
 	

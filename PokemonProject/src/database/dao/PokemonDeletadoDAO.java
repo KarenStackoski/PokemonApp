@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import database.model.PokemonDeletadoModel;
 
 public class PokemonDeletadoDAO {
-	private String scriptSelect = ""; //onde será implementado o script sql
-	private String scriptInsert = "";
+	private String scriptSelect = "select * from tb_pokemon_deletado"; //onde será implementado o script sql
+	private String scriptInsert = "insert into tb_pokemon_deletado  (pokemon_deletado, tipo_pokemon_deletado) values (?,?)";
 	private PreparedStatement psScriptSelect;
 	private PreparedStatement psScriptInsert;
 	
@@ -21,7 +21,7 @@ public class PokemonDeletadoDAO {
 	
 	public boolean insert(PokemonDeletadoModel deletedPokemon) throws SQLException {
 		psScriptInsert.clearParameters();
-		psScriptInsert.setInt(1, deletedPokemon.getId());
+		//psScriptInsert.setInt(1, deletedPokemon.getId()); Comentado porque não precisa inserir o id
 		psScriptInsert.setString(2, deletedPokemon.getPokemonDeletado());
 		psScriptInsert.setString(3, deletedPokemon.getTipoPokemonDeletado());
 		return psScriptInsert.execute();
