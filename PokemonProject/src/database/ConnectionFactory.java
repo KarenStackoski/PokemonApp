@@ -5,9 +5,10 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/Pokemon";
-    private static final String USER = "root";
-    private static final String PASSWORD = "unesc";
+    private static final String URL = "jdbc:mysql://localhost:3306/pokemon";
+    private static final String USER = "tt";
+    private static final String PASSWORD = "dbaaccesskey";
+
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -27,4 +28,5 @@ public class ConnectionFactory {
             }
         }
     }
+     
 }
