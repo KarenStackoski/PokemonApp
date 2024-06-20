@@ -4,6 +4,7 @@ import database.ConnectionFactory;
 import database.dao.PokemonDAO;
 import database.dao.PokemonEletricoDAO;
 import database.dao.PokemonFogoDAO;
+import database.dao.PokemonTotalizadoresDAO;
 import database.dao.PokemonVoadorDAO;
 import database.model.PokemonEletricoModel;
 import database.model.PokemonFogoModel;
@@ -44,6 +45,10 @@ public class Main {
             }
 
             ArrayList<PokemonModel> pokemonList = pokemonDAO.selectAll();
+            
+            PokemonTotalizadoresDAO totalDAO = new PokemonTotalizadoresDAO(connection);
+            
+            totalDAO.insert(pokemonList);
 
             for (PokemonModel pokemon : pokemonList) {
                 switch (pokemon.getTipo().toLowerCase()) {
@@ -82,5 +87,6 @@ public class Main {
         } finally {
             ConnectionFactory.closeConnection(connection);
         }
+        
     }
 }
