@@ -48,7 +48,6 @@ public class Main {
             
             PokemonTotalizadoresDAO totalDAO = new PokemonTotalizadoresDAO(connection);
             
-            totalDAO.insert(pokemonList);
 
             for (PokemonModel pokemon : pokemonList) {
                 switch (pokemon.getTipo().toLowerCase()) {
@@ -79,6 +78,8 @@ public class Main {
                     default:
                         System.out.println("Tipo de Pokémon não reconhecido: " + pokemon.getTipo());
                 }
+                
+                totalDAO.insert(pokemonList);
             }
 
             System.out.println("Dados inseridos com sucesso!");
