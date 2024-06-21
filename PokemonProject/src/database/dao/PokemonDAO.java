@@ -16,6 +16,10 @@ public class PokemonDAO {
 	private PreparedStatement psScriptInsert;
 	private PreparedStatement psScriptDelete;
 	
+	public PokemonDAO() {
+		
+	}
+	
 	public PokemonDAO(Connection connection) throws SQLException {
 		psScriptSelect = connection.prepareStatement(scriptSelect);
 		psScriptInsert = connection.prepareStatement(scriptInsert);
