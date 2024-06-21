@@ -26,7 +26,7 @@ public class PokemonEletricoDAO {
         psScriptExists = connection.prepareStatement(scriptExists);
 	}
 	
-	private boolean pokemonExists(String pokemonName) throws SQLException {
+	public boolean pokemonExists(String pokemonName) throws SQLException {
 	    psScriptExists.clearParameters();
 	    psScriptExists.setString(1, pokemonName);
 	    ResultSet rs = psScriptExists.executeQuery();
@@ -41,22 +41,7 @@ public class PokemonEletricoDAO {
             return psScriptInsert.execute();
         } else{
             System.out.println("Este Pokémon já existe na tabela de Pokémon elétricos.");
-            
-            
-            	try {
-                	Connection connection = ConnectionFactory.getConnection();
-                    PokemonDeletadoDAO deletadoDAO = new PokemonDeletadoDAO(connection);
-                    PokemonDeletadoModel deletadoModel = new PokemonDeletadoModel();
-                    deletadoModel.setPokemonDeletado(eletricoPokemon.getPokemonEletrico());
-                    deletadoModel.setTipoPokemonDeletado("Elétrico");
-                    deletadoDAO.insert(deletadoModel);
-                    deletadoDAO.delete(eletricoPokemon.getId());
-                    return false;
-    			} catch (Exception e) {
-    				// TODO: handle exception
-    			}
             }
-            
 		return false;
     }
 	
