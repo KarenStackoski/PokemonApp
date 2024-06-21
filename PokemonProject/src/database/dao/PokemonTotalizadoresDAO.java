@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import database.model.PokemonModel;
 import database.model.PokemonTotalizadoresModel;
 import database.model.PokemonVoadorModel;
 
@@ -26,13 +27,13 @@ public class PokemonTotalizadoresDAO {
 		psScriptInsert = connection.prepareStatement(scriptInsert);
 	}
 	
-	public boolean insert(PokemonTotalizadoresModel totPokemon) throws SQLException {
+	public boolean insert(ArrayList<PokemonModel> pokemonList) throws SQLException {
 		psScriptInsert.clearParameters();
-		psScriptInsert.setInt(1, totPokemon.getId());
-		psScriptInsert.setInt(2, totPokemon.getTotalizadorDeletado());
-		psScriptInsert.setInt(3, totPokemon.getTotalizadorEletrico());
-		psScriptInsert.setInt(4, totPokemon.getTotalizadorFogo());
-		psScriptInsert.setInt(5, totPokemon.getTotalizadorVoador());
+//		psScriptInsert.setInt(1, pokemonList.getId());
+//		psScriptInsert.setInt(2, pokemonList.getTotalizadorDeletado());
+//		psScriptInsert.setInt(3, pokemonList.getTotalizadorEletrico());
+//		psScriptInsert.setInt(4, pokemonList.getTotalizadorFogo());
+//		psScriptInsert.setInt(5, pokemonList.getTotalizadorVoador());
 		return psScriptInsert.execute();
 	}
 	
