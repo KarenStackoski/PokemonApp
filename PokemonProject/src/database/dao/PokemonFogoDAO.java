@@ -45,15 +45,12 @@ public class PokemonFogoDAO {
 	public ArrayList<PokemonFogoModel> selectAll() throws SQLException{
 		ArrayList<PokemonFogoModel> firePokemonList = new ArrayList<PokemonFogoModel>();
 		ResultSet result = psScriptSelect.executeQuery();
-		if (result != null) {
-			result.first();
-			while(result.isAfterLast()) {
-				PokemonFogoModel pfm = new PokemonFogoModel();
-				pfm.setId(result.getInt("id_pokemon_fogo"));
-				pfm.setPokemonFogo(result.getString("pokemon_fogo"));
-				firePokemonList.add(pfm);
-				result.next();
-			}
+
+		while(result.next()) {
+			PokemonFogoModel pfm = new PokemonFogoModel();
+			pfm.setId(result.getInt("id_pokemon_fogo"));
+			pfm.setPokemonFogo(result.getString("pokemon_fogo"));
+			firePokemonList.add(pfm);
 		}
 		return firePokemonList;
 	}

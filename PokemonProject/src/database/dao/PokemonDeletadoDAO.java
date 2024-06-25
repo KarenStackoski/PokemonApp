@@ -36,16 +36,13 @@ public class PokemonDeletadoDAO {
 	public ArrayList<PokemonDeletadoModel> selectAll() throws SQLException{
 		ArrayList<PokemonDeletadoModel> deletedPokemonList = new ArrayList<PokemonDeletadoModel>();
 		ResultSet result = psScriptSelect.executeQuery();
-		if (result != null) {
-			result.first();
-			while(result.isAfterLast()) {
-				PokemonDeletadoModel pdm = new PokemonDeletadoModel();
-				pdm.setId(result.getInt("id_pokemon_deletado"));
-				pdm.setPokemonDeletado(result.getString("pokemon_deletado"));
-				pdm.setTipoPokemonDeletado(result.getString("tipo_pokemon_deletado"));
-				deletedPokemonList.add(pdm);
-				result.next();
-			}
+		
+		while(result.next()) {
+			PokemonDeletadoModel pdm = new PokemonDeletadoModel();
+			pdm.setId(result.getInt("id_pokemon_deletado"));
+			pdm.setPokemonDeletado(result.getString("pokemon_deletado"));
+			pdm.setTipoPokemonDeletado(result.getString("tipo_pokemon_deletado"));
+			deletedPokemonList.add(pdm);
 		}
 		return deletedPokemonList;
 	}

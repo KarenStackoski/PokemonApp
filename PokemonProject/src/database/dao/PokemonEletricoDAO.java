@@ -11,7 +11,7 @@ import database.model.PokemonDeletadoModel;
 import database.model.PokemonEletricoModel;
 
 public class PokemonEletricoDAO {
-	private String scriptSelect = "select * from tb_pokemon_eletrico"; //onde será implementado o script sql
+	private String scriptSelect = "select * from tb_pokemon_eletrico tpe"; //onde será implementado o script sql
 	private String scriptInsert = "insert into tb_pokemon_eletrico (id_pokemon_eletrico, pokemon_eletrico) values (?,?)";
     private String scriptExists = "SELECT 1 FROM tb_pokemon_eletrico WHERE pokemon_eletrico = ?";
 
@@ -48,15 +48,13 @@ public class PokemonEletricoDAO {
 	public ArrayList<PokemonEletricoModel> selectAll() throws SQLException{
 		ArrayList<PokemonEletricoModel> eletricPokemonList = new ArrayList<PokemonEletricoModel>();
 		ResultSet result = psScriptSelect.executeQuery();
-		if (result != null) {
-			result.first();
-			while(result.isAfterLast()) {
-				PokemonEletricoModel pem = new PokemonEletricoModel();
-				pem.setId(result.getInt("id_pokemon_eletrico"));
-				pem.setPokemonEletrico("pokemon_eletrico");
-				eletricPokemonList.add(pem);
-				result.next();
-			}
+		
+		while(result.next()) {
+			PokemonEletricoModel pem = new PokemonEletricoModel();
+			pem.setId(result.getInt("id_pokemon_eletrico"));
+			pem.setPokemonEletrico(result.getString("pokemon_eletrico"));
+			eletricPokemonList.add(pem);
+			
 		}
 		return eletricPokemonList;
 	}
