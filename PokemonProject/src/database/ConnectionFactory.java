@@ -6,8 +6,8 @@ import java.sql.SQLException;
 public class ConnectionFactory {
 
     private static final String URL = "jdbc:mysql://localhost:3306/pokemon";
-    private static final String USER = "tt";
-    private static final String PASSWORD = "dbaaccesskey";
+    private static final String USER = "";
+    private static final String PASSWORD = "";
 
     static {
         try {
