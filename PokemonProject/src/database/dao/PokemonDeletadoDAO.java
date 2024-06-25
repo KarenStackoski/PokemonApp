@@ -6,24 +6,30 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import database.ConnectionFactory;
 import database.model.PokemonDeletadoModel;
+import database.model.PokemonModel;
 
 public class PokemonDeletadoDAO {
+	private String scriptDelete = "delete from tb_pokemon where id_pokemon = ?;";
 	private String scriptSelect = "select * from tb_pokemon_deletado"; //onde será implementado o script sql
 	private String scriptInsert = "insert into tb_pokemon_deletado  (pokemon_deletado, tipo_pokemon_deletado) values (?,?)";
 	private PreparedStatement psScriptSelect;
 	private PreparedStatement psScriptInsert;
+	private PreparedStatement psScriptDelete;
+	ResultSet resultset = null;
 	
 	public PokemonDeletadoDAO(Connection connection) throws SQLException {
 		psScriptSelect = connection.prepareStatement(scriptSelect);
 		psScriptInsert = connection.prepareStatement(scriptInsert);
+		psScriptDelete = connection.prepareStatement(scriptDelete);
 	}
-	
+
 	public boolean insert(PokemonDeletadoModel deletedPokemon) throws SQLException {
 		psScriptInsert.clearParameters();
 		//psScriptInsert.setInt(1, deletedPokemon.getId()); Comentado porque não precisa inserir o id
-		psScriptInsert.setString(2, deletedPokemon.getPokemonDeletado());
-		psScriptInsert.setString(3, deletedPokemon.getTipoPokemonDeletado());
+		psScriptInsert.setString(1, deletedPokemon.getPokemonDeletado());
+		psScriptInsert.setString(2, deletedPokemon.getTipoPokemonDeletado());
 		return psScriptInsert.execute();
 	}
 	
@@ -43,4 +49,10 @@ public class PokemonDeletadoDAO {
 		}
 		return deletedPokemonList;
 	}
-}
+	
+	public void delete(int ids) throws SQLException {
+	        psScriptDelete.setInt(1, ids);
+	        psScriptDelete.execute();
+	    }
+	}
+

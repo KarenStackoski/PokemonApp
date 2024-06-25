@@ -2,10 +2,12 @@ package main;
 
 import database.ConnectionFactory;
 import database.dao.PokemonDAO;
+import database.dao.PokemonDeletadoDAO;
 import database.dao.PokemonEletricoDAO;
 import database.dao.PokemonFogoDAO;
 import database.dao.PokemonTotalizadoresDAO;
 import database.dao.PokemonVoadorDAO;
+import database.model.PokemonDeletadoModel;
 import database.model.PokemonEletricoModel;
 import database.model.PokemonFogoModel;
 import database.model.PokemonModel;
@@ -14,6 +16,9 @@ import database.model.PokemonVoadorModel;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
@@ -21,7 +26,9 @@ public class Main {
         try {
             connection = ConnectionFactory.getConnection();
             PokemonDAO pokemonDAO = new PokemonDAO(connection);
-
+            PokemonDeletadoDAO deletadoDAO = new PokemonDeletadoDAO(connection);
+            PokemonDeletadoModel deletadoModel = new PokemonDeletadoModel();
+            
             String[][] pokemons = {
                 {"picachu", "eletrico"},
                 {"miraidon", "eletrico"},
@@ -33,7 +40,8 @@ public class Main {
                 {"butterfree", "voador"},
                 {"fuecoco", "fogo"}
             };
-
+            
+            //Adiciona os dados previamente digitados na String
             for (String[] p : pokemons) {
             	String pokemonName = StringUtils.removeAccents(p[0]);
             	String pokemonType = StringUtils.removeAccents(p[1]);
@@ -41,15 +49,11 @@ public class Main {
             	pokemon.setPokemon(pokemonName);
             	pokemon.setTipo(pokemonType);
             	pokemonDAO.insert(pokemon);
-
             }
-
+            //Cria o ArrayList da tabela princípal dos pokemons
             ArrayList<PokemonModel> pokemonList = pokemonDAO.selectAll();
             
-            PokemonTotalizadoresDAO totalDAO = new PokemonTotalizadoresDAO(connection);
-            
-            totalDAO.insert(pokemonList);
-
+            //O For aqui adiciona cada um no seu tipo, mantendo as tabelas organizadas
             for (PokemonModel pokemon : pokemonList) {
                 switch (pokemon.getTipo().toLowerCase()) {
                     case "voador":
@@ -80,13 +84,27 @@ public class Main {
                         System.out.println("Tipo de Pokémon não reconhecido: " + pokemon.getTipo());
                 }
             }
-
-            System.out.println("Dados inseridos com sucesso!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(connection);
-        }
+            
+             
+              
+            //Responsável por validar a existencia de pokemons duplicados na tabela princípal
+            Set<String> set = new HashSet<>();   
+            for(PokemonModel lista: pokemonList) {
+                if(!set.add(lista.getPokemon())) {
+                	deletadoModel.setPokemonDeletado(lista.getPokemon());
+                	deletadoModel.setTipoPokemonDeletado(lista.getTipo());
+                	deletadoDAO.insert(deletadoModel);
+                	deletadoDAO.delete(lista.getId());
+                }
+            }
+            
+            //Roda o SQL direto no banco, onde roda o count dos tipos de pokemons e adiciona eles nas tabelas
+            PokemonTotalizadoresDAO totalDAO = new PokemonTotalizadoresDAO(connection);    
+            totalDAO.insert(pokemonList);   
+        }catch (Exception e) {
+			System.out.println("!!Programa não execultado!!");
+		}
+	}
+}   
         
-    }
-}
+

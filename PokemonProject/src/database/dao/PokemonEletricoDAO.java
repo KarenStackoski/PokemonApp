@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import database.ConnectionFactory;
+import database.model.PokemonDeletadoModel;
 import database.model.PokemonEletricoModel;
 
 public class PokemonEletricoDAO {
@@ -24,7 +26,7 @@ public class PokemonEletricoDAO {
         psScriptExists = connection.prepareStatement(scriptExists);
 	}
 	
-	private boolean pokemonExists(String pokemonName) throws SQLException {
+	public boolean pokemonExists(String pokemonName) throws SQLException {
 	    psScriptExists.clearParameters();
 	    psScriptExists.setString(1, pokemonName);
 	    ResultSet rs = psScriptExists.executeQuery();
@@ -37,10 +39,10 @@ public class PokemonEletricoDAO {
             psScriptInsert.setInt(1, eletricoPokemon.getId());
             psScriptInsert.setString(2, eletricoPokemon.getPokemonEletrico());
             return psScriptInsert.execute();
-        } else {
+        } else{
             System.out.println("Este Pokémon já existe na tabela de Pokémon elétricos.");
-            return false;
-        }
+            }
+		return false;
     }
 	
 	public ArrayList<PokemonEletricoModel> selectAll() throws SQLException{
