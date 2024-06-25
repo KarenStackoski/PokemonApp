@@ -40,18 +40,14 @@ public class PokemonTotalizadoresDAO {
 	public ArrayList<PokemonTotalizadoresModel> selectAll() throws SQLException{
 		ArrayList<PokemonTotalizadoresModel> totPokemonList = new ArrayList<PokemonTotalizadoresModel>();
 		ResultSet result = psScriptSelect.executeQuery();
-		if (result != null) {
-			result.first();
-			while(result.isAfterLast()) {
-				PokemonTotalizadoresModel ptm = new PokemonTotalizadoresModel();
-				ptm.setId(result.getInt("id_totalizadores"));
-				ptm.setTotalizadorDeletado(result.getInt("tot_duplicado"));
-				ptm.setTotalizadorEletrico(result.getInt("tot_eletrico"));
-				ptm.setTotalizadorFogo(result.getInt("tot_fogo"));
-				ptm.setTotalizadorVoador(result.getInt("tot_voador"));
-				totPokemonList.add(ptm);
-				result.next();
-			}
+		while(result.next()) {
+			PokemonTotalizadoresModel ptm = new PokemonTotalizadoresModel();
+			ptm.setId(result.getInt("id_totalizadores"));
+			ptm.setTotalizadorDeletado(result.getInt("tot_duplicado"));
+			ptm.setTotalizadorEletrico(result.getInt("tot_eletrico"));
+			ptm.setTotalizadorFogo(result.getInt("tot_fogo"));
+			ptm.setTotalizadorVoador(result.getInt("tot_voador"));
+			totPokemonList.add(ptm);
 		}
 		return totPokemonList;
 	}

@@ -45,15 +45,11 @@ public class PokemonVoadorDAO {
 	public ArrayList<PokemonVoadorModel> selectAll() throws SQLException{
 		ArrayList<PokemonVoadorModel> flyingPokemonList = new ArrayList<PokemonVoadorModel>();
 		ResultSet result = psScriptSelect.executeQuery();
-		if (result != null) {
-			result.first();
-			while(result.isAfterLast()) {
-				PokemonVoadorModel pvm = new PokemonVoadorModel();
-				pvm.setId(result.getInt("id_pokemon_voador"));
-				pvm.setPokemonVoador(result.getString("pokemon_voador"));
-				flyingPokemonList.add(pvm);
-				result.next();
-			}
+		while(result.next()) {
+			PokemonVoadorModel pvm = new PokemonVoadorModel();
+			pvm.setId(result.getInt("id_pokemon_voador"));
+			pvm.setPokemonVoador(result.getString("pokemon_voador"));
+			flyingPokemonList.add(pvm);
 		}
 		return flyingPokemonList;
 	}

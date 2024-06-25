@@ -32,7 +32,7 @@ public class TestPokemon {
 			this.pokemon = new PokemonDAO(connection);
 			ArrayList<PokemonModel> pokemons = pokemon.selectAll();
 			for(PokemonModel pokemon : pokemons) {
-				System.out.println(pokemon);
+				System.out.println("Id: "+pokemon.getId()+" | Nome: "+pokemon.getPokemon()+ " | Tipo: "+pokemon.getTipo());
 			}
 		}
 		catch (SQLException e) {
@@ -45,7 +45,8 @@ public class TestPokemon {
 			this.deletedPokemon = new PokemonDeletadoDAO(connection);
 			ArrayList<PokemonDeletadoModel> deletedPokemons = deletedPokemon.selectAll();
 			for (PokemonDeletadoModel deletedPokemon : deletedPokemons) {
-				System.out.println(deletedPokemon);
+				System.out.println("Id: "+deletedPokemon.getId()+" | Nome: "+deletedPokemon.getPokemonDeletado()+" | Tipo: "
+									+ ""+deletedPokemon.getTipoPokemonDeletado());
 			}
 		}
 		catch (SQLException e) {
@@ -58,7 +59,7 @@ public class TestPokemon {
 			this.eletricPokemon = new PokemonEletricoDAO(connection);
 			ArrayList<PokemonEletricoModel> eletricPokemons = eletricPokemon.selectAll();
 			for (PokemonEletricoModel eletricPokemon : eletricPokemons) {
-				System.out.println(eletricPokemon);
+				System.out.println("Id: "+eletricPokemon.getId()+" | Nome: "+eletricPokemon.getPokemonEletrico());
 			}
 		}
 		catch (SQLException e) {
@@ -71,7 +72,7 @@ public class TestPokemon {
 			this.firePokemon = new PokemonFogoDAO(connection);
 			ArrayList<PokemonFogoModel> firePokemons = firePokemon.selectAll();
 			for (PokemonFogoModel firePokemon : firePokemons) {
-				System.out.println(firePokemon);
+				System.out.println("Id: "+firePokemon.getId()+" | Nome: "+firePokemon.getPokemonFogo());
 			}
 		}
 		catch (SQLException e) {
@@ -84,7 +85,7 @@ public class TestPokemon {
 			this.flyingPokemon = new PokemonVoadorDAO(connection);
 			ArrayList<PokemonVoadorModel> flyingPokemons = flyingPokemon.selectAll();
 			for (PokemonVoadorModel flyingPokemon : flyingPokemons) {
-				System.out.println(flyingPokemon);
+				System.out.println("Id: "+flyingPokemon.getId()+" | Nome: "+flyingPokemon.getPokemonVoador());
 			}
 		}
 		catch (SQLException e) {
@@ -96,9 +97,12 @@ public class TestPokemon {
 		try (Connection connection = ConnectionFactory.getConnection()) {
 			this.totPokemon = new PokemonTotalizadoresDAO(connection);
 			ArrayList<PokemonTotalizadoresModel> totPokemons = totPokemon.selectAll();
-			for (PokemonTotalizadoresModel totPokemon : totPokemons) {
-				System.out.println(totPokemon);
-			}
+			PokemonTotalizadoresModel total = totPokemons.get(totPokemons.size()-1);
+			System.out.println("Pokemons de fogo: "+total.getTotalizadorFogo()
+			+ "\nPokemons voadores: "+total.getTotalizadorVoador()
+			+ "\nPokemons Elétricos: "+total.getTotalizadorEletrico()
+			+ "\nPokemons Deletados: "+total.getTotalizadorDeletado());
+			
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -115,8 +119,10 @@ public class TestPokemon {
 					   "[1] Mostrar Pokemons\n" +
 					   "[2] Mostrar Pokemons de Fogo\n" +
 					   "[3] Mostrar Pokemons Voadores\n" +
-					   "[4] Mostrar Pokemons Eletricos\\n" +
-					   "[5] Encerrar\n\n" +
+					   "[4] Mostrar Pokemons Eletricos\n" +
+					   "[5] Mostrar Pokemons Deletados\n" +
+					   "[6] Mostrar Totalizadores\n" +
+					   "[7] Encerrar\n\n" +
 					   " >>> ");
 			option = scanner.nextInt();
 			
@@ -134,13 +140,19 @@ public class TestPokemon {
 				DisplayAllEletricPokemons();
 				break;
 			case 5:
-				System.out.println("Encerrando...");
+				DisplayAllDeletedPokemons();
+				break;
+			case 6:
+				DisplayAllTotPokemons();
+				break;
+			case 7:
+				System.out.println("Encerrando . . .");
 				break;
 			default:
 				System.out.println("Opcao invalida!");
 				break;
 			}
-		} while (option != 5);
+		} while (option != 7);
 		
 		scanner.close();
 	}
